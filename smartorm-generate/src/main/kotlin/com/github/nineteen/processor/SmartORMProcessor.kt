@@ -5,9 +5,11 @@ import com.google.common.collect.ImmutableSetMultimap
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.Element
+import javax.lang.model.element.ElementKind
 
+const val SMART_DAO = "com.github.nineteen.SmartDAO"
 @SupportedAnnotationTypes(
-    "com.github.nineteen.SmartDAO")
+    SMART_DAO)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 open class SmartORMProcessor: BasicAnnotationProcessor() {
 
@@ -18,11 +20,15 @@ open class SmartORMProcessor: BasicAnnotationProcessor() {
     class SmartORMStep(val processorEnv: ProcessingEnvironment) : Step {
 
         override fun annotations(): MutableSet<String> {
-            return mutableSetOf("com.github.nineteen.SmartDAO")
+            return mutableSetOf(SMART_DAO)
         }
 
         override fun process(elementsByAnnotation: ImmutableSetMultimap<String, Element>?): MutableSet<out Element> {
-            elementsByAnnotation?.forEach { t, u -> println("${t}${u}") }
+            val smartDaos = elementsByAnnotation?.get(SMART_DAO)
+            smartDaos?.filter { it.kind == ElementKind.INTERFACE }
+                ?.forEach {
+                    println(it)
+                }
             return mutableSetOf()
         }
 
