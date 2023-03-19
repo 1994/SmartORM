@@ -1,4 +1,4 @@
-package com.github.nineteen;
+package com.github.nineteen.smartorm;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
