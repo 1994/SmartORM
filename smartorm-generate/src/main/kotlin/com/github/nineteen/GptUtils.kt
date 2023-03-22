@@ -6,6 +6,8 @@ import com.google.gson.GsonBuilder
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.IOException
+import java.lang.RuntimeException
 import java.net.InetSocketAddress
 import java.net.Proxy
 import java.util.concurrent.TimeUnit
@@ -91,13 +93,18 @@ object GptUtils {
 
 
         var result: String? = null
-        CLIENT.newCall(build).execute().use { response ->
-            {
-                // 这里千万不能写成？，坑爹的kotlin
-                val string = response.body!!.string()
-                result = string
+        try {
+            CLIENT.newCall(build).execute().use { response ->
+                {
+                    // 这里千万不能写成？，坑爹的kotlin
+                    val string = response.body!!.string()
+                    result = string
+                }
             }
+        } catch (e:IOException) {
+            throw RuntimeException(e)
         }
+
         println(result)
         val r = JSON.fromJson(result, CompletionResponse::class.java)
         return r.choices[0].message.content
