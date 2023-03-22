@@ -5,6 +5,7 @@ import java.io.File
 import java.nio.charset.Charset
 import javax.annotation.processing.ProcessingEnvironment
 import javax.lang.model.element.Element
+import javax.lang.model.type.TypeMirror
 import javax.tools.StandardLocation
 
 object SourceUtils {
@@ -18,5 +19,13 @@ object SourceUtils {
 
         // todo read source from compiler
         return Files.readLines(File(path), Charset.defaultCharset()).joinToString("")
+    }
+
+    fun readSource(typeMirror: TypeMirror, processingEnvironment: ProcessingEnvironment): String {
+        val typeElement = processingEnvironment.elementUtils.getTypeElement(
+            processingEnvironment.typeUtils.erasure(typeMirror).toString()
+        )
+
+        return readSource(typeElement, processingEnvironment)
     }
 }

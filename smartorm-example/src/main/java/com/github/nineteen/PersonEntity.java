@@ -11,6 +11,8 @@ public class PersonEntity {
 
     private String name;
 
+    private String extInfo;
+
     public Long getId() {
         return id;
     }
@@ -25,5 +27,13 @@ public class PersonEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getExtInfo() {
+        return extInfo;
+    }
+
+    public void setExtInfo(String extInfo) {
+        this.extInfo = extInfo;
     }
 }

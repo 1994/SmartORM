@@ -75,7 +75,7 @@ object GptUtils {
     }
 
 
-    fun completion(userContent: String, systemContent: String): String {
+    fun completion(userContent: String, systemContent: String): String? {
         val completionRequest = CompletionRequest(messages = listOf(message {
             messageRole = MessageRole.USER
             content = userContent
@@ -91,19 +91,11 @@ object GptUtils {
             .build()
 
 
-        var result: String? = null
-        try {
-            CLIENT.newCall(build).execute().use { execute ->
-                {
-                    val body: ResponseBody = execute.body!!
-                    result = body.string()
-                }
-            }
-        } catch (e: IOException) {
-            throw RuntimeException(e)
-        }
+        val result: String = CLIENT.newCall(build).execute()
+            .use {
+                it.body?.string()
+            } ?: return null
 
-        println(result)
         val r = JSON.fromJson(result, CompletionResponse::class.java)
         return r.choices[0].message.content
     }
