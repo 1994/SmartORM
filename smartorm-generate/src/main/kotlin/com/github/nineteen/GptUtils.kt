@@ -46,7 +46,7 @@ data class CompletionResponse(
     val usage: CompletionUsage
 )
 
-data class CompletionUsage(val promptTokens:Long, val totalTokens:Long)
+data class CompletionUsage(val promptTokens: Long, val totalTokens: Long)
 data class CompletionChoice(val message: CompletionMessage)
 
 object GptUtils {
@@ -75,7 +75,6 @@ object GptUtils {
     }
 
 
-
     fun completion(userContent: String, systemContent: String): String {
         val completionRequest = CompletionRequest(messages = listOf(message {
             messageRole = MessageRole.USER
@@ -94,14 +93,13 @@ object GptUtils {
 
         var result: String? = null
         try {
-            CLIENT.newCall(build).execute().use { response ->
+            CLIENT.newCall(build).execute().use { execute ->
                 {
-                    // 这里千万不能写成？，坑爹的kotlin
-                    val string = response.body!!.string()
-                    result = string
+                    val body: ResponseBody = execute.body!!
+                    result = body.string()
                 }
             }
-        } catch (e:IOException) {
+        } catch (e: IOException) {
             throw RuntimeException(e)
         }
 
