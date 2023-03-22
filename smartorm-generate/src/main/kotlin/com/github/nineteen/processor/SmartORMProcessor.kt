@@ -61,6 +61,11 @@ open class SmartORMProcessor: BasicAnnotationProcessor() {
                                     "    }\n" +
                                     "}\n"
                         )
+                        val javaFile = completion.removePrefix("```java\n").removeSuffix("```")
+                        val packageName = processorEnv.elementUtils.getPackageOf(it).toString()
+                        processorEnv.filer.createSourceFile("${packageName}.${it.simpleName}Impl").openWriter().use {
+                            it.write(javaFile)
+                        }
                     }
                 }
             return mutableSetOf()
