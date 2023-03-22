@@ -1,6 +1,8 @@
 package com.github.nineteen
 
+import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -37,15 +39,24 @@ data class CompletionRequest(
     val messages: List<CompletionMessage>
 )
 
+data class CompletionResponse(
+    val choices: List<CompletionChoice>,
+    val usage: CompletionUsage
+)
+
+data class CompletionUsage(val promptTokens:Long, val totalTokens:Long)
+data class CompletionChoice(val message: CompletionMessage)
+
 object GptUtils {
 
-    private val JSON = Gson()
+    private val JSON = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
+
     private val CLIENT = OkHttpClient.Builder()
         .connectTimeout(5, TimeUnit.MINUTES)
         .writeTimeout(5, TimeUnit.MINUTES)
         .readTimeout(5, TimeUnit.MINUTES)
         .callTimeout(5, TimeUnit.MINUTES)
-//        .proxy(Proxy(Proxy.Type.SOCKS, InetSocketAddress("localhost", 7891)))
+        .proxy(Proxy(Proxy.Type.SOCKS, InetSocketAddress("localhost", 7890)))
         .build()
 
     private val HTTP_URL = HttpUrl.Builder()
@@ -63,7 +74,7 @@ object GptUtils {
 
 
 
-    fun completion(userContent: String, systemContent: String) {
+    fun completion(userContent: String, systemContent: String): String {
         val completionRequest = CompletionRequest(messages = listOf(message {
             messageRole = MessageRole.USER
             content = userContent
@@ -79,12 +90,16 @@ object GptUtils {
             .build()
 
 
+        var result: String? = null
         CLIENT.newCall(build).execute().use { response ->
             {
-                println(response.isSuccessful)
-                val string = response.body?.string()
-                println(string)
+                // 这里千万不能写成？，坑爹的kotlin
+                val string = response.body!!.string()
+                result = string
             }
         }
+        println(result)
+        val r = JSON.fromJson(result, CompletionResponse::class.java)
+        return r.choices[0].message.content
     }
 }
