@@ -15,6 +15,6 @@ fun getConfig() : SmartConfig? {
         val resourceAsStream: InputStream = SmartConfig::javaClass.javaClass.classLoader.getResourceAsStream(CONFIG_FILE)!!
         this.load(resourceAsStream)
     }
-    val token = p.getProperty("smartorm.gtp.token") ?: return null
+    val token = p.getProperty("smartorm.gpt.token") ?: return null
     return SmartConfig(GptConfig(token))
 }
