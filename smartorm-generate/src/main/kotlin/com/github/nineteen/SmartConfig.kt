@@ -1,7 +1,5 @@
 package com.github.nineteen
 
-import com.google.common.io.Resources
-import java.io.FileInputStream
 import java.io.InputStream
 import java.util.*
 
