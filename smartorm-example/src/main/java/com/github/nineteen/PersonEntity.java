@@ -1,39 +1,21 @@
 package com.github.nineteen;
 
-//import jakarta.persistence.Entity;
-//import jakarta.persistence.Table;
 
-//@Entity
-//@Table(name = "test_person")
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.Data;
+
+@Entity
+@Table(name = "test_person")
+@Data
 public class PersonEntity {
 
     private Long id;
 
     private String name;
 
-    private String extInfo;
+    private Long birth;
 
-    public Long getId() {
-        return id;
-    }
+    private int status;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getExtInfo() {
-        return extInfo;
-    }
-
-    public void setExtInfo(String extInfo) {
-        this.extInfo = extInfo;
-    }
 }
