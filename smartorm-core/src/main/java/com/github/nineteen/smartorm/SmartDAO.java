@@ -11,4 +11,6 @@ public @interface SmartDAO {
 
     String datasource();
 
+    Class<?> entity();
+
 }

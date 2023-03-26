@@ -2,9 +2,15 @@ package com.github.nineteen;
 
 import com.github.nineteen.smartorm.SmartDAO;
 
-@SmartDAO(datasource = "person")
+import java.util.List;
+
+@SmartDAO(datasource = "person", entity = PersonEntity.class)
 public interface PersonDAO {
+
+    int insert(PersonEntity entity);
 
     PersonEntity getById(Long id);
 
+    int deleteById(Long id);
+    List<PersonEntity> findByGreaterThanBirth(Long birth);
 }
