@@ -1,10 +1,8 @@
 package com.github.nineteen.processor
 
-import com.github.nineteen.GptUtils
-import com.github.nineteen.SourceUtils
+import com.github.nineteen.*
 import com.google.auto.common.AnnotationMirrors
 import com.google.auto.common.BasicAnnotationProcessor
-import com.google.auto.common.MoreElements
 import com.google.common.collect.ImmutableSetMultimap
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
@@ -31,34 +29,35 @@ open class SmartORMProcessor : BasicAnnotationProcessor() {
 
         override fun process(elementsByAnnotation: ImmutableSetMultimap<String, Element>?): MutableSet<out Element> {
             val smartDaos = elementsByAnnotation?.get(SMART_DAO)
-            smartDaos?.filter { it.kind == ElementKind.INTERFACE }
+            smartDaos?.filter { it.kind == ElementKind.INTERFACE && processorEnv.elementUtils.getAllAnnotationMirrors(it).size > 0 }
                 ?.forEach {
-                    // todo
                     val allAnnotationMirrors = processorEnv.elementUtils.getAllAnnotationMirrors(it)
-                    if (allAnnotationMirrors.size > 0) {
-                        val datasourceValue =
-                            AnnotationMirrors.getAnnotationValue(allAnnotationMirrors.first(), "datasource")
-                        val readSource = SourceUtils.readSource(it, processorEnv)
-                        val toList = MoreElements.getAllMethods(
-                            MoreElements.asType(it),
-                            processorEnv.typeUtils,
-                            processorEnv.elementUtils
-                        ).map { it.returnType }.map { SourceUtils.readSource(it, processorEnv) }.toList()
+                    val datasourceValue =
+                        AnnotationMirrors.getAnnotationValue(allAnnotationMirrors.first(), "datasource")
+                    val entityValue =
+                        AnnotationMirrors.getAnnotationValue(allAnnotationMirrors.first(), "entity")
 
+                    val entity = processorEnv.elementUtils.getTypeElement(entityValue.value.toString())
 
-                        val completion = GptUtils.completion(
-                            readSource,
-                            "请帮我用spring jdbc的方式实现这个dao接口，注入bean名为${datasourceValue}的datasource，请直接返回代码, 不要过多解释。Entity层代码为:${toList}")
-                        val javaFile = completion?.removePrefix("```java\n")?.removeSuffix("```")
-                        val packageName = processorEnv.elementUtils.getPackageOf(it).toString()
+                    val prompt = PromptUtils.getPrompt(
+                        PromptContext(
+                            getConfig()!!,
+                            it,
+                            entity,
+                            processorEnv,
+                            datasourceValue.toString()
+                        )
+                    )
+                    val completion = GptUtils.completion("", prompt)
 
-                        if (javaFile?.isNotBlank() == true) {
-                            processorEnv.filer.createSourceFile("${packageName}.${it.simpleName}Impl").openWriter()
-                                .use {
-                                    it.write(javaFile)
-                                }
-                        }
+                    val javaFile = completion?.substringAfter("```java\n")?.substringBefore("```")
+                    val packageName = processorEnv.elementUtils.getPackageOf(it).toString()
 
+                    if (javaFile?.isNotBlank() == true) {
+                        processorEnv.filer.createSourceFile("${packageName}.${it.simpleName}Impl").openWriter()
+                            .use {
+                                it.write(javaFile)
+                            }
                     }
                 }
             return mutableSetOf()

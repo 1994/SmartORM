@@ -4,17 +4,22 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-         <groupId>io.github.1994</groupId>
+        <groupId>io.github.1994</groupId>
         <artifactId>SmartORM</artifactId>
         <version>${revision}</version>
     </parent>
+    <groupId>io.github</groupId>
+    <artifactId>smartorm-all</artifactId>
 
-    <artifactId>smartorm-core</artifactId>
     <dependencies>
         <dependency>
-            <groupId>jakarta.persistence</groupId>
-            <artifactId>jakarta.persistence-api</artifactId>
-            <version>3.1.0</version>
+            <groupId>io.github.1994</groupId>
+            <artifactId>smartorm-generate</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.1994</groupId>
+            <artifactId>smartorm-core</artifactId>
         </dependency>
     </dependencies>
+
 </project>
