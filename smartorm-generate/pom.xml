@@ -8,7 +8,7 @@
         <artifactId>SmartORM</artifactId>
         <version>${revision}</version>
     </parent>
-
+    <name>SmartORM</name>
     <artifactId>smartorm-generate</artifactId>
 
     <properties>
