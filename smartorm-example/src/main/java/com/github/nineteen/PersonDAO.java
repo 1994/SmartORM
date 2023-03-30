@@ -4,7 +4,7 @@ import com.github.nineteen.smartorm.SmartDAO;
 
 import java.util.List;
 
-@SmartDAO(datasource = "person", entity = PersonEntity.class)
+@SmartDAO(datasource = "datasource", entity = PersonEntity.class)
 public interface PersonDAO {
 
     int insert(PersonEntity entity);
