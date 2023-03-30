@@ -111,13 +111,13 @@ smartorm.gpt.token=<your-openai-token>
 
 The following settings are related to GPT:
 
-- smartorm.gpt.token: Your OpenAI API token, which is required for SmartORM to access the GPT API. You can obtain an API
+- `smartorm.gpt.token`: Your OpenAI API token, which is required for SmartORM to access the GPT API. You can obtain an API
   token by signing up for OpenAI's GPT service.
-- smartorm.gpt.proxy: Optional proxy server for SmartORM to use when accessing the GPT API. If you need to use a proxy
+- `smartorm.gpt.proxy`: Optional proxy server for SmartORM to use when accessing the GPT API. If you need to use a proxy
   server, specify the proxy server hostname and port here.
-- smartorm.gpt.proxy.type: Optional proxy server type for SmartORM to use when accessing the GPT API. If you're using a
+- `smartorm.gpt.proxy`.type: Optional proxy server type for SmartORM to use when accessing the GPT API. If you're using a
   proxy server, specify the proxy server type as either http or socks.
-- smartorm.gpt.model: Optional GPT model to use for generating code. The default is gpt-3.5-turbo, but you can specify
+- `smartorm.gpt.model`: Optional GPT model to use for generating code. The default is gpt-3.5-turbo, but you can specify
   any
   of the GPT models provided by OpenAI.
 
@@ -125,6 +125,6 @@ The following settings are related to GPT:
 
 The following settings are related to database access:
 
-- smartorm.dialect: Optional database dialect for SmartORM to use. The default is mysql, but you can specify any of the
+- `smartorm.dialect`: Optional database dialect for SmartORM to use. The default is mysql, but you can specify any of the
   supported database dialects, such as postgresql or sqlite.
 
