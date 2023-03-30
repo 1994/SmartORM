@@ -19,7 +19,7 @@ To use SmartORM in your Java project, you can add the following Maven dependency
 <dependency>
     <groupId>io.github.1994</groupId>
     <artifactId>smartorm-all</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0.Alpha</version>
 </dependency>
 ```
 
