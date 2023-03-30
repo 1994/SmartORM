@@ -8,7 +8,6 @@
         <artifactId>SmartORM</artifactId>
         <version>${revision}</version>
     </parent>
-    <groupId>io.github</groupId>
     <artifactId>smartorm-all</artifactId>
 
     <dependencies>
