@@ -16,9 +16,13 @@ with the JPA (Java Persistence API) specification.
 To use SmartORM in your Java project, you can add the following Maven dependency to your project's pom.xml file:
 
 ```xml
-
+<dependency>
+    <groupId>io.github.1994</groupId>
+    <artifactId>smartorm-all</artifactId>
+    <version>1.0.0</version>
+</dependency>
 ```
 
-## Getting Started
+> Please note that this project is currently under development and is still in its early preview version.
 
-// todo
+## Getting Started
