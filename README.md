@@ -11,6 +11,11 @@ with the JPA (Java Persistence API) specification.
 - JPA-compliant interface and entity annotations
 - Supports multiple database types, such as MySQL, PostgreSQL, SQLite, etc.
 
+## Requirements
+
+- Java 1.8 or above
+- An OpenAI API key
+
 ## Installation
 
 To use SmartORM in your Java project, you can add the following Maven dependency to your project's pom.xml file:
@@ -26,7 +31,7 @@ To use SmartORM in your Java project, you can add the following Maven dependency
 
 > Please note that this project is currently under development and is still in its early preview version.
 
-## Getting Started
+## Usage
 
 The `@SmartDAO` annotation is a core annotation in `SmartORM`, used to define a DAO (Data Access Object) interface and
 its
@@ -111,11 +116,13 @@ smartorm.gpt.token=<your-openai-token>
 
 The following settings are related to GPT:
 
-- `smartorm.gpt.token`: Your OpenAI API token, which is required for SmartORM to access the GPT API. You can obtain an API
+- `smartorm.gpt.token`: Your OpenAI API token, which is required for SmartORM to access the GPT API. You can obtain an
+  API
   token by signing up for OpenAI's GPT service.
 - `smartorm.gpt.proxy`: Optional proxy server for SmartORM to use when accessing the GPT API. If you need to use a proxy
   server, specify the proxy server hostname and port here.
-- `smartorm.gpt.proxy`.type: Optional proxy server type for SmartORM to use when accessing the GPT API. If you're using a
+- `smartorm.gpt.proxy`.type: Optional proxy server type for SmartORM to use when accessing the GPT API. If you're using
+  a
   proxy server, specify the proxy server type as either http or socks.
 - `smartorm.gpt.model`: Optional GPT model to use for generating code. The default is gpt-3.5-turbo, but you can specify
   any
@@ -125,6 +132,10 @@ The following settings are related to GPT:
 
 The following settings are related to database access:
 
-- `smartorm.dialect`: Optional database dialect for SmartORM to use. The default is mysql, but you can specify any of the
+- `smartorm.dialect`: Optional database dialect for SmartORM to use. The default is mysql, but you can specify any of
+  the
   supported database dialects, such as postgresql or sqlite.
 
+## Example
+
+[full example](./smartorm-example/README.md)
