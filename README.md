@@ -139,3 +139,34 @@ The following settings are related to database access:
 ## Example
 
 [full example](./smartorm-example/README.md)
+
+## TODOS
+
+[] Support for more JPA annotations
+Currently, `SmartORM` only supports a limited subset of JPA annotations. Adding
+support for more annotations such as `@ManyToOne`, `@OneToMany`, `@OneToOne`, and `@JoinColumn` would make it easier to
+work with more complex object models.
+
+[] Integration with other frameworks:
+Integration with other frameworks: Integrating SmartORM with popular Java frameworks such as Mybatis or Hibernate would
+make it easier to use it in existing projects and leverage their features and capabilities.
+
+[] Improved error handling: `SmartORM` currently lacks detailed error messages and logging, which can make it difficult
+to diagnose and fix issues. Implementing more informative error messages and better logging would make it easier for
+developers to identify and fix problems.
+
+[] Improved performance: While SmartORM generates efficient code, there may be opportunities to optimize performance
+further. For example, by using batch operations for insert, update, and delete statements, or by implementing a cache
+for frequently accessed data.
+
+[] Better documentation
+
+[] IDE support
+
+## Contribution
+
+As you can see from the above Todos, there are still many features to be implemented in `SmartORM`.
+
+Welcome to contribute to `SmartORM` by submitting pull requests! I appreciate all kinds of contributions, including but
+not limited to bug fixes, new features, and documentation improvements. If you have any questions or feedback, please
+feel free to reach out to us via GitHub issues or email. 
